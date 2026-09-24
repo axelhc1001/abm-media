@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABM Trading · autorización de TikTok</title>
+<style>
+  :root { --papel:#F5F3EE; --tinta:#33291B; --verde:#7ECB20; --suave:#5E5949; --borde:#E0DCD2; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:32px 16px; background:var(--papel); color:var(--tinta);
+         font-family: "Segoe UI", system-ui, -apple-system, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; }
+  h1 { font-size: 30px; margin: 0 0 4px; }
+  p { color: var(--suave); line-height: 1.5; }
+  .codigo { display:block; width:100%; padding:16px; margin:18px 0 10px; font-family: Consolas, monospace;
+            font-size:16px; word-break:break-all; background:#FFFDF8; border:2px solid var(--borde);
+            border-radius:12px; }
+  button { background:var(--verde); color:var(--tinta); border:0; border-radius:10px; padding:12px 20px;
+           font-size:16px; font-weight:700; cursor:pointer; }
+  .aviso { margin-top:26px; padding:14px 16px; border-left:4px solid var(--verde); background:#FFFDF8; }
+  .marca { margin-top:40px; font-size:14px; color:#8A8478; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Autorización de TikTok</h1>
+  <p>Esta página solo recibe el código que devuelve TikTok después de que autorizas la aplicación
+     de <strong>ABM Trading</strong>. No guarda nada ni lo envía a ningún lado.</p>
+
+  <div id="ok" hidden>
+    <p><strong>Listo.</strong> Copia este código y pégalo en el chat:</p>
+    <code class="codigo" id="codigo"></code>
+    <button onclick="copiar()">Copiar código</button>
+  </div>
+
+  <div id="sin" hidden>
+    <p>Aquí no llegó ningún código. Abre el enlace de autorización que te pasaron y vuelve a intentarlo.</p>
+  </div>
+
+  <div class="aviso">
+    El código caduca en pocos minutos: úsalo en cuanto lo copies.
+  </div>
+
+  <p class="marca">ABM Trading · abmtrading.mx</p>
+</main>
+<script>
+  const p = new URLSearchParams(location.search);
+  const code = p.get("code");
+  if (code) {
+    document.getElementById("codigo").textContent = code;
+    document.getElementById("ok").hidden = false;
+  } else {
+    document.getElementById("sin").hidden = false;
+  }
+  function copiar() {
+    navigator.clipboard.writeText(document.getElementById("codigo").textContent)
+      .then(() => { const b = document.querySelector("button"); b.textContent = "Copiado"; });
+  }
+</script>
+</body>
+</html>
